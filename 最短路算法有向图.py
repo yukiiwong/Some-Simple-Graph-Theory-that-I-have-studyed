@@ -1,6 +1,7 @@
 
 def find_point(adict,alist):
     min_distance = 10000
+    k = -1
     for i in alist:
         if adict[i] < min_distance:
             min_distance = adict[i]
@@ -13,7 +14,7 @@ matrix = [[0,1,inf,2,inf,inf],
           [inf,4,inf,0,inf,inf],
           [inf,inf,2,3,0,inf],
           [inf,inf,2,inf,2,0]]
-origin = 0
+origin = 1   #起点
 nodes = [i for i in range(len(matrix))] #未确定的点集数组
 visited =[]                              #确定的点集数组
 nodes.remove(origin)
@@ -29,10 +30,13 @@ for i in visited:
             min_distance[j] = new_distance
             re_point[j] = i
     new_point = find_point(min_distance,nodes)
-    
-    visited.append(new_point)
-    nodes.remove(new_point)
-    print("%d -> %d" %(re_point[new_point],new_point))
+    if new_point == -1:
+        print("无法到达点{}".format(nodes))
+        nodes.remove(nodes[0])
+    else:
+        visited.append(new_point)
+        nodes.remove(new_point)
+        print("%d -> %d" %(re_point[new_point],new_point))
     if nodes == []:
         break
 print(min_distance)
